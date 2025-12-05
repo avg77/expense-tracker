@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="mb-1">Dashboard</h2>
+<p class="text-muted mb-3">Quick overview of your spending activity</p>
+<hr>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-4">
+    <div class="card stat-card p-3">
+      <h4>Total Expenses</h4>
+      <h2 class="text-primary">${{ "%.2f"|format(total) }}</h2>
+    </div>
+  </div>
+  <div class="col-md-4 d-flex align-items-stretch">
+    <div class="card stat-card p-3 w-100">
+      <h4>Quick Action</h4>
+      <p class="mb-2 text-muted">Add a new expense entry</p>
+      <a href="{{ url_for('main.add_expense') }}" class="btn btn-primary pill-btn">Add Expense</a>
+    </div>
+  </div>
+</div>
+
+<h4 class="section-title">Spending by Category</h4>
+<div class="card p-3 mb-4">
+  <canvas id="pieChart" width="400" height="200"></canvas>
+</div>
+
+<script>
+(function () {
+  const ctx = document.getElementById('pieChart').getContext('2d');
+  const pieLabels = {{ labels | tojson }};
+  const pieValues = {{ values | tojson }};
+  new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: pieLabels,
+      datasets: [{
+        data: pieValues,
+        backgroundColor: ["#2563eb","#f97316","#22c55e","#e11d48","#8b5cf6"]
+      }]
+    }
+  });
+})();
+</script>
+
+<h4 class="section-title">Recent Expenses</h4>
+<table class="table table-striped table-bordered">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Amount</th>
+      <th>Category</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for e in expenses %}
+    <tr>
+      <td>{{ e.title }}</td>
+      <td>${{ "%.2f"|format(e.amount) }}</td>
+      <td>{{ e.category.name if e.category else "-" }}</td>
+      <td>{{ e.date }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

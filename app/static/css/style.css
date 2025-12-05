@@ -1,0 +1,402 @@
+/* -------------------------
+   Global layout & background
+-------------------------- */
+
+body#themeBody {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  /* Soft colorful gradient instead of white */
+  background: radial-gradient(circle at top left, #a5d8ff 0, #e0f2fe 35%, #fdf2ff 80%);
+  color: #1f2933;
+  min-height: 100vh;
+}
+
+/* Keep main content nicely centered */
+body#themeBody > .container {
+  max-width: 1100px;
+}
+
+/* Smooth transitions */
+body,
+.navbar,
+.card,
+.table,
+.btn,
+.alert {
+  transition: background-color 0.25s ease, color 0.25s ease,
+    box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+/* -------------------------
+   Colorful Navbar
+-------------------------- */
+
+.app-navbar {
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  border-radius: 18px;
+  padding: 0.65rem 1.25rem;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.35);
+}
+
+.app-navbar .navbar-brand {
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: #ffffff !important;
+}
+
+.app-navbar .navbar-nav .nav-link {
+  font-weight: 500;
+  color: #e5e7eb;
+  position: relative;
+  padding-bottom: 0.15rem;
+}
+
+.app-navbar .navbar-nav .nav-link:hover {
+  color: #ffffff;
+}
+
+.app-navbar .navbar-nav .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.15rem;
+  width: 0;
+  height: 2px;
+  background: #ffffff;
+  opacity: 0.8;
+  transition: width 0.2s ease;
+}
+
+.app-navbar .navbar-nav .nav-link:hover::after {
+  width: 100%;
+}
+
+.app-navbar button[onclick="toggleTheme()"] {
+  border-radius: 999px;
+  padding-inline: 1rem;
+  font-size: 0.85rem;
+}
+
+/* -------------------------
+   Dashboard cards & sections
+-------------------------- */
+
+.card {
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+  background-color: #ffffff;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 35px rgba(15, 23, 42, 0.14);
+}
+
+.stat-card h4 {
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6b7280;
+  margin-bottom: 0.4rem;
+}
+
+.stat-card h2 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #111827;
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+
+/* pill button inside quick action */
+.pill-btn {
+  border-radius: 999px;
+}
+
+/* -------------------------
+   Tables
+-------------------------- */
+
+.table {
+  background-color: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 0;
+}
+
+.table thead {
+  background: linear-gradient(90deg, #2563eb, #4f46e5);
+  color: #f9fafb;
+}
+
+.table thead th {
+  border: none;
+  font-weight: 500;
+  font-size: 0.86rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.table tbody tr {
+  vertical-align: middle;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.table tbody tr:hover {
+  background-color: #eff6ff;
+  transform: translateY(-1px);
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  background-color: #f9fafb;
+}
+
+.table-bordered > :not(caption) > * > * {
+  border-color: #e5e7eb;
+}
+
+/* -------------------------
+   Forms
+-------------------------- */
+
+.form-control,
+.form-select {
+  border-radius: 12px;
+  border-color: #d1d5db;
+  padding: 0.55rem 0.75rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 0.15rem rgba(37, 99, 235, 0.25);
+}
+
+label.form-label {
+  font-weight: 500;
+  color: #374151;
+}
+
+/* -------------------------
+   Buttons
+-------------------------- */
+
+.btn-primary,
+.btn-success,
+.btn-outline-primary,
+.btn-outline-secondary {
+  border-radius: 999px;
+  font-weight: 500;
+  padding-inline: 1.2rem;
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #2563eb, #4f46e5);
+  border: none;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(90deg, #1d4ed8, #4338ca);
+}
+
+.btn-success {
+  background: linear-gradient(90deg, #16a34a, #22c55e);
+  border: none;
+}
+
+.btn-success:hover {
+  background: linear-gradient(90deg, #15803d, #16a34a);
+}
+
+.btn-outline-primary {
+  border-color: #2563eb;
+  color: #2563eb;
+}
+
+.btn-outline-primary:hover {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+.btn-outline-secondary {
+  border-color: #6b7280;
+  color: #4b5563;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #6b7280;
+  color: #ffffff;
+}
+
+/* -------------------------
+   Alerts
+-------------------------- */
+
+.alert {
+  border-radius: 12px;
+  border: none;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+}
+
+/* -------------------------
+   Auth (login / register) screen
+-------------------------- */
+
+.auth-wrapper {
+  min-height: calc(100vh - 90px); /* full height minus navbar */
+  background: linear-gradient(135deg, #4ac0f0 0%, #00b3d8 50%, #3b82f6 100%);
+  border-radius: 24px;
+  padding: 2.5rem 1rem;
+}
+
+.auth-card {
+  max-width: 420px;
+  width: 100%;
+  border-radius: 18px;
+  background: #ffffff;
+}
+
+.auth-title {
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #2563eb;
+}
+
+/* -------------------------
+   Links & misc
+-------------------------- */
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+h2,
+h4 {
+  color: #111827;
+}
+
+/* -------------------------
+   Dark mode
+-------------------------- */
+
+body.dark {
+  background: radial-gradient(circle at top left, #111827 0, #020617 45%, #000 100%);
+  color: #f9fafb;
+}
+
+body.dark .app-navbar {
+  background: linear-gradient(90deg, #0f172a, #020617);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.9);
+}
+
+body.dark .app-navbar .navbar-brand {
+  color: #93c5fd !important;
+}
+
+body.dark .app-navbar .nav-link {
+  color: #e5e7eb;
+}
+
+body.dark .app-navbar .nav-link::after {
+  background: #93c5fd;
+}
+
+body.dark .card {
+  background-color: #020617;
+  border: 1px solid #1f2937;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8);
+}
+
+body.dark .stat-card h4 {
+  color: #9ca3af;
+}
+
+body.dark .stat-card h2 {
+  color: #e5e7eb;
+}
+
+body.dark .table {
+  background-color: #020617;
+}
+
+body.dark .table thead {
+  background: linear-gradient(90deg, #1d4ed8, #6d28d9);
+}
+
+body.dark .table tbody tr:hover {
+  background-color: rgba(55, 65, 81, 0.6);
+}
+
+body.dark .table-striped > tbody > tr:nth-of-type(odd) > * {
+  background-color: #020617;
+}
+
+body.dark .form-control,
+body.dark .form-select {
+  background-color: #020617;
+  border-color: #374151;
+  color: #e5e7eb;
+}
+
+body.dark .form-control:focus,
+body.dark .form-select:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 0.15rem rgba(37, 99, 235, 0.45);
+}
+
+body.dark label.form-label {
+  color: #d1d5db;
+}
+
+body.dark .btn-outline-primary {
+  border-color: #93c5fd;
+  color: #93c5fd;
+}
+
+body.dark .btn-outline-primary:hover {
+  background-color: #93c5fd;
+  color: #020617;
+}
+
+body.dark .btn-outline-secondary {
+  border-color: #9ca3af;
+  color: #e5e7eb;
+}
+
+body.dark .btn-outline-secondary:hover {
+  background-color: #9ca3af;
+  color: #020617;
+}
+
+body.dark .alert {
+  background-color: #111827;
+  color: #e5e7eb;
+}
+
+body.dark a {
+  color: #93c5fd;
+}
+
+body.dark a:hover {
+  color: #bfdbfe;
+}
+
+/* Dark mode auth wrapper */
+body.dark .auth-wrapper {
+  background: radial-gradient(circle at top right, #1d4ed8, #020617 55%);
+}
+
+body.dark .auth-card {
+  background-color: #020617;
+  border: 1px solid #1f2937;
+}
