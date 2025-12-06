@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-ephemeral
+  namespace: myapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-ephemeral
+  template:
+    metadata:
+      labels:
+        app: mysql-ephemeral
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:8.0
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: DB_PASSWORD
+        - name: MYSQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: DB_NAME
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: data
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-ephemeral
+  namespace: myapp
+spec:
+  selector:
+    app: mysql-ephemeral
+  ports:
+  - port: 3306
+    targetPort: 3306

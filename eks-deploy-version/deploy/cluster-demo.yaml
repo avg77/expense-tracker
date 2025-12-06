@@ -1,0 +1,11 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: expense-tracker-demo
+  region: us-east-1
+managedNodeGroups:
+  - name: ng-demo
+    instanceTypes: ["t3.small"]
+    desiredCapacity: 1
+    minSize: 1
+    maxSize: 2
