@@ -29,17 +29,17 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql-db
+  name: mysql-ephemeral
   namespace: myapp
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mysql-db
+      app: mysql-ephemeral
   template:
     metadata:
       labels:
-        app: mysql-db
+        app: mysql-ephemeral
     spec:
       containers:
       - name: mysql
@@ -68,12 +68,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql-db
+  name: mysql-ephemeral
   namespace: myapp
 spec:
   type: ClusterIP
   selector:
-    app: mysql-db
+    app: mysql-ephemeral
   ports:
   - port: 3306
     targetPort: 3306
@@ -100,7 +100,7 @@ spec:
         - containerPort: 5000
         env:
         - name: DB_HOST
-          value: "mysql-db"
+          value: "mysql-ephemeral"
         - name: DB_USER
           valueFrom:
             secretKeyRef:
