@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Flatpickr calendar CSS & JS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<style>
+/* ---- PAGE GRID ---- */
+.expense-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    min-height: 90vh;
+    padding: 40px;
+    background: #f9f7ff;
+}
+
+/* ---- LEFT: FORM CARD ---- */
+.expense-form-card {
+    width: 450px;
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 35px 32px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+    animation: fadeInLeft .8s ease;
+}
+
+.expense-form-card h2 {
+    text-align: center;
+    font-weight: 800;
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
+/* Inputs Styling */
+.expense-form-card input,
+.expense-form-card select {
+    font-size: 16px;
+    height: 45px;
+    border-radius: 10px;
+    border: 2px solid #dcd7ff;
+    transition: .3s ease;
+}
+.expense-form-card input:focus,
+.expense-form-card select:focus {
+    border-color: #7b38ff;
+    box-shadow: 0 0 10px rgba(123,56,255,0.5);
+}
+
+/* Flatpickr input appearance */
+.flatpickr-input {
+    background-color: #fff;
+    cursor: pointer;
+}
+
+/* Submit Button */
+.submit-exp-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 10px;
+    border: none;
+    color: #fff;
+    background: linear-gradient(135deg,#7b38ff,#c76bff);
+    cursor: pointer;
+    transition: .3s;
+}
+.submit-exp-btn:hover {
+    transform: scale(1.07);
+}
+
+/* ---- RIGHT: VIDEO CARD ---- */
+.expense-video-card {
+    width: 450px;
+    height: 450px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+    animation: fadeInRight .8s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.expense-video-card video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Animations */
+@keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(-60px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(60px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+</style>
+
+
+<!-- =================== PAGE LAYOUT =================== -->
+
+<div class="expense-wrapper">
+
+    <!-- LEFT PANEL — EXPENSE FORM -->
+    <div class="expense-form-card">
+
+        <h2>Add Expense 💸</h2>
+
+        <form method="post">
+
+            <label class="fw-semibold">Title</label>
+            <input type="text" name="title" class="form-control mb-3"
+                   placeholder="Ex: Coffee, Groceries" required>
+
+            <label class="fw-semibold">Amount (₹)</label>
+            <input type="number" step="0.01" name="amount"
+                   class="form-control mb-3" placeholder="Enter amount" required>
+
+            <!-- 🔥 LIVE CALENDAR DATE PICKER -->
+            <label class="fw-semibold">Date</label>
+            <input type="text" id="expense-date" name="date"
+                   class="form-control mb-3" placeholder="Select date" required>
+
+            <label class="fw-semibold">Category</label>
+            <select name="category" class="form-select mb-3" required>
+                <option selected disabled>Choose Category</option>
+                {% for c in categories %}
+                    <option value="{{ c.id }}">{{ c.name }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit" class="submit-exp-btn">Add Expense</button>
+
+        </form>
+    </div>
+
+
+    <!-- RIGHT PANEL — VIDEO CARD -->
+    <div class="expense-video-card">
+        <video autoplay loop muted playsinline>
+            <source src="{{ url_for('static', filename='videos/expenses.mp4') }}" type="video/mp4">
+        </video>
+    </div>
+
+</div>
+
+<script>
+  // Initialize Flatpickr calendar
+  document.addEventListener("DOMContentLoaded", function () {
+    flatpickr("#expense-date", {
+      dateFormat: "Y-m-d",      // value sent to backend
+      altInput: true,           // pretty display
+      altFormat: "F j, Y",      // e.g. June 15, 2025
+      defaultDate: "today",
+      allowInput: false
+    });
+  });
+</script>
+
+{% endblock %}

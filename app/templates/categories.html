@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+  /* Background Video */
+  .category-bg-video {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      opacity: 0.60;
+      filter: blur(0.5px);
+  }
+
+  /* Grid */
+  .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 22px;
+      margin-top: 20px;
+      padding-bottom: 35px;
+  }
+
+  /* Category Card */
+  .category-card {
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(8px);
+      border-radius: 14px;
+      padding: 20px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 18px;
+      color: #222;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.22);
+      transition: .25s ease;
+      animation: popUp .5s ease forwards;
+      position: relative;
+  }
+  .category-card:hover { transform: translateY(-6px) scale(1.03); }
+
+  @keyframes popUp {
+      from { opacity:0; transform:scale(.85);}
+      to { opacity:1; transform:scale(1);}
+  }
+
+  /* Icon Styling */
+  .cat-icon {
+      font-size: 32px;
+      margin-bottom: 8px;
+      display: block;
+  }
+
+  /* Delete Button */
+  .delete-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #ff4c4c;
+      color: white;
+      border:none;
+      border-radius: 50%;
+      width:28px;height:28px;
+      font-size: 14px;
+      cursor:pointer;
+      transition:.2s;
+  }
+  .delete-btn:hover { background:#d90000; }
+  
+  /* Add Category Form */
+  .category-add-box {
+      background: rgba(255,255,255,0.92);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+  }
+</style>
+
+<!-- Background Video -->
+<video autoplay muted loop playsinline class="category-bg-video">
+    <source src="{{ url_for('static', filename='videos/category.mp4') }}" type="video/mp4">
+</video>
+
+<h2 class="mb-3 fw-bold">Manage Categories</h2>
+
+<!-- Add New Category -->
+<div class="category-add-box mb-4">
+<form method="post" class="row g-3 align-items-end">
+
+    <div class="col-md-6">
+      <label for="name" class="form-label fw-semibold">New Category</label>
+      <input id="name" name="name" type="text" class="form-control shadow-sm"
+             placeholder="e.g. Food, Groceries, Bills" required>
+    </div>
+
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary px-4 py-2 shadow-sm">Add</button>
+    </div>
+
+</form>
+</div>
+
+<!-- CATEGORY CARDS -->
+<div class="category-grid">
+  {% for c in categories %}
+    <div class="category-card">
+
+        <!-- DELETE (X) button -->
+        <form method="post" action="{{ url_for('main.delete_category', id=c.id) }}" style="display:inline;">
+          <button class="delete-btn" onclick="return confirm('Delete this category?')">×</button>
+        </form>
+
+        <!-- Auto icon (based on name) -->
+        <span class="cat-icon">
+          {% if 'food' in c.name|lower %} 🍽
+          {% elif 'travel' in c.name|lower %} ✈️
+          {% elif 'shop' in c.name|lower %} 🛍
+          {% elif 'health' in c.name|lower %} 🩺
+          {% elif 'rent' in c.name|lower %} 🏠
+          {% elif 'bill' in c.name|lower %} 💳
+          {% elif 'entertain' in c.name|lower %} 🎬
+          {% else %} 📁
+          {% endif %}
+        </span>
+
+        {{ c.name }}
+
+    </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+
+# Python cache & compiled
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+
+# Local DB (if you’re moving to MySQL in Docker Compose)
+*.db
+
+# Tests (optional, if not needed in the container)
+tests/
+*.pytest_cache/
