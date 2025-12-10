@@ -1,0 +1,103 @@
+{% extends "auth_base.html" %}
+
+{% block page_title %}{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
+
+  <!-- LEFT SIDE — VIDEO REPLACING SVG -->
+  <div class="auth-illustration-box">
+      <div class="auth-logo">Spendora </div>
+
+      <!-- 📌 Your login.mp4 video here -->
+      <video autoplay muted loop playsinline class="auth-hero-video">
+          <source src="{{ url_for('static', filename='videos/login.mp4') }}" type="video/mp4">
+      </video>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="auth-panel">
+    <div class="auth-panel-inner">
+      <h2 class="auth-heading">Welcome Back :)</h2>
+      <p class="auth-subtext">
+        To keep connected with us please login with your personal information by username and password.
+      </p>
+
+      <!-- flash messages -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="w-100 mb-2">
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }} mb-2 small">{{ message }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      <form method="POST" action="">
+        {% if form is defined %}
+          {{ form.hidden_tag() }}
+        {% endif %}
+
+        <!-- Email / Username -->
+        <div class="auth-field">
+          <label class="auth-field-label">Email / Username</label>
+          <div class="auth-input-shell">
+            <input
+              type="text"
+              name="username"
+              class="auth-input-control"
+              placeholder="you@example.com"
+              required
+            >
+            <span class="auth-input-icon success-dot"></span>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="auth-field">
+          <label class="auth-field-label">Password</label>
+          <div class="auth-input-shell">
+            <input
+              type="password"
+              name="password"
+              class="auth-input-control"
+              placeholder="Enter your password"
+              required
+            >
+          </div>
+        </div>
+
+        <!-- Remember + Forgot -->
+        <div class="auth-row-between mb-3">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="remember" name="remember">
+            <label class="form-check-label small" for="remember">
+              Remember Me
+            </label>
+          </div>
+          <a href="#" class="auth-link-small">Forgot Password?</a>
+        </div>
+
+        <!-- CTA buttons -->
+        <div class="auth-button-row mb-3">
+          <button type="submit" class="btn auth-btn-primary">
+            Login Now
+          </button>
+          <a href="{{ url_for('auth.register') }}" class="btn auth-btn-secondary">
+            Create Account
+          </a>
+        </div>
+
+        <div class="auth-divider-text">Or you can join with</div>
+
+        <div class="auth-social-row">
+          <button type="button" class="auth-social auth-google">G</button>
+          <button type="button" class="auth-social auth-facebook"><i class="bi bi-facebook"></i></button>
+          <button type="button" class="auth-social auth-twitter"><i class="bi bi-twitter"></i></button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

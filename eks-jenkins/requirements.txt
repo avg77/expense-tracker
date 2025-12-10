@@ -1,0 +1,10 @@
+Flask
+Flask-SQLAlchemy
+pymysql
+Flask-Login
+Flask-RESTful
+cryptography
+python-dotenv
+Werkzeug
+Jinja2
+pandas
