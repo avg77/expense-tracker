@@ -1,0 +1,56 @@
+{
+  "family": "expense-stack-task",
+  "executionRoleArn": "arn:aws:iam::243017877863:role/ecsTaskExecutionRole",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": [
+    "FARGATE"
+  ],
+  "cpu": "1024",
+  "memory": "2048",
+  "containerDefinitions": [
+    {
+      "name": "mysql",
+      "image": "mysql:8.0",
+      "essential": true,
+      "environment": [
+        { "name": "MYSQL_ROOT_PASSWORD", "value": "rootpassword" },
+        { "name": "MYSQL_DATABASE", "value": "expense_db" }
+      ],
+      "portMappings": [
+        { "containerPort": 3306, "hostPort": 3306, "protocol": "tcp" }
+      ],
+      "healthCheck": {
+        "command": ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -prootpassword || exit 1"],
+        "interval": 15,
+        "timeout": 5,
+        "retries": 10,
+        "startPeriod": 20
+      }
+    },
+    {
+      "name": "expense-tracker",
+      "image": "<IMAGE_URI>",
+      "essential": true,
+      "portMappings": [
+        { "containerPort": 5000, "hostPort": 5000, "protocol": "tcp" }
+      ],
+      "environment": [
+        { "name": "ENV", "value": "prod" },
+        { "name": "SECRET_KEY", "value": "supersecret" },
+        { "name": "DB_USER", "value": "root" },
+        { "name": "DB_PASSWORD", "value": "rootpassword" },
+        { "name": "DB_HOST", "value": "127.0.0.1" },
+        { "name": "DB_NAME", "value": "expense_db" }
+      ],
+      "command": ["sh", "-c", "sleep 15 && python run.py"],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/expense-tracker",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}
